@@ -23,7 +23,7 @@ public class ExpenseController {
         return "The expense ID is " + id;
     }
 
-    @DeleteMapping("/expense")
+    @DeleteMapping("/expenses")
     public String deleteExpenseById(@RequestParam("id") Long id){
         return "Delete the expense object by its id:" +id;
     }
