@@ -1,0 +1,6 @@
+br\marksouzza\expensetrackerapi\repository\ExpenseRepository.class
+br\marksouzza\expensetrackerapi\controller\ExpenseController.class
+br\marksouzza\expensetrackerapi\service\ExpenseService.class
+br\marksouzza\expensetrackerapi\ExpensetrackerapiApplication.class
+br\marksouzza\expensetrackerapi\Implementation\ExpenseServiceImpl.class
+br\marksouzza\expensetrackerapi\model\Expense.class
