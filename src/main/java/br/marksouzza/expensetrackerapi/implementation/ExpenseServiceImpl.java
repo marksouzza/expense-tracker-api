@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,27 +24,27 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public Expense getExpenseById(Long id){
+    public Expense getExpenseById(Long id) {
         Optional<Expense> expense = expenseRepo.findById(id);
-        if (expense.isPresent()){
+        if (expense.isPresent()) {
             return expense.get();
         }
-        throw new ResourceNotFoundException("Expense not found for id: "+id);
+        throw new ResourceNotFoundException("Expense not found for id: " + id);
     }
 
     @Override
-    public void deleteExpenseById(Long id){
+    public void deleteExpenseById(Long id) {
         Optional<Expense> expense = expenseRepo.findById(id);
         expenseRepo.deleteById(id);
     }
 
     @Override
-    public Expense addExpense(Expense expense){
-       return expenseRepo.save(expense);
+    public Expense addExpense(Expense expense) {
+        return expenseRepo.save(expense);
     }
 
     @Override
-    public Expense updateExpense(Long id, Expense expense){
+    public Expense updateExpense(Long id, Expense expense) {
         Expense existingExpense = getExpenseById(id);
         existingExpense.setName(expense.getName() != null ? expense.getName() : existingExpense.getName());
         existingExpense.setDescription(expense.getDescription() != null ? expense.getDescription() : existingExpense.getDescription());
@@ -50,5 +52,27 @@ public class ExpenseServiceImpl implements ExpenseService {
         existingExpense.setAmount(expense.getAmount() != null ? expense.getAmount() : existingExpense.getAmount());
         existingExpense.setDate(expense.getDate() != null ? expense.getDate() : existingExpense.getDate());
         return expenseRepo.save(existingExpense);
+    }
+
+    @Override
+    public List<Expense> readByCategory(String category, Pageable page) {
+        return expenseRepo.findByCategory(category, page).toList();
+    }
+
+    @Override
+    public List<Expense> readByNameContaining(String name, Pageable page) {
+        return expenseRepo.findByNameContaining(name, page).toList();
+    }
+
+    @Override
+    public List<Expense> readByDateBetween(Date startDate, Date endDate, Pageable page) {
+        if (startDate == null) {
+            startDate = new Date(0);
+        }
+        if (endDate == null) {
+            endDate = new Date(System.currentTimeMillis());
+        }
+        Page<Expense> pages = expenseRepo.findByDateBetween(startDate, endDate, page);
+        return pages.toList();
     }
 }

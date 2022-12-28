@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -44,6 +44,24 @@ public class ExpenseController {
     @DeleteMapping("/delete/{id}")
     public void deleteExpenseById(@PathVariable("id") Long id) {
         expenseService.deleteExpenseById(id);
+    }
+
+    @GetMapping("/category")
+    public List<Expense> getAllExpensesByCategory(@RequestParam String category, Pageable page){
+        return expenseService.readByCategory(category, page);
+    }
+
+    @GetMapping("/name")
+    public List<Expense>getAllExpensesByName(@RequestParam String keyword, Pageable page){
+        return expenseService.readByNameContaining(keyword, page);
+    }
+
+    @GetMapping("/date")
+    public List<Expense>getAllExpensesByDate(
+                        @RequestParam(required = false)Date startDate,
+                        @RequestParam(required = false)Date endDate, Pageable page){
+        return expenseService.readByDateBetween(startDate, endDate, page);
+
     }
 
 }
