@@ -1,6 +1,7 @@
 package br.marksouzza.expensetrackerapi.implementation;
 
 import br.marksouzza.expensetrackerapi.domain.Expense;
+import br.marksouzza.expensetrackerapi.exception.ResourceNotFoundException;
 import br.marksouzza.expensetrackerapi.repository.ExpenseRepository;
 import br.marksouzza.expensetrackerapi.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         if (expense.isPresent()){
             return expense.get();
         }
-        throw new RuntimeException("Expense not found for id: "+id);
+        throw new ResourceNotFoundException("Expense not found for id: "+id);
     }
 
     @Override
