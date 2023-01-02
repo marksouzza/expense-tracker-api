@@ -2,6 +2,7 @@ package br.marksouzza.expensetrackerapi.implementation;
 
 import br.marksouzza.expensetrackerapi.domain.User;
 import br.marksouzza.expensetrackerapi.domain.UserModel;
+import br.marksouzza.expensetrackerapi.exception.ItemAlreadyExistsException;
 import br.marksouzza.expensetrackerapi.repository.UserRepository;
 import br.marksouzza.expensetrackerapi.service.UserService;
 import org.springframework.beans.BeanUtils;
@@ -14,7 +15,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepo;
 
-    public User createUser(UserModel userModel){
+    public User createUser(UserModel userModel) {
+        if (userRepo.existsByEmail(userModel.getEmail())) {
+            throw new ItemAlreadyExistsException("User is already registered with email: " + userModel.getEmail());
+        }
         User user = new User();
         BeanUtils.copyProperties(userModel, user);
         return userRepo.save(user);

@@ -1,7 +1,7 @@
 package br.marksouzza.expensetrackerapi.handler;
 
 import br.marksouzza.expensetrackerapi.exception.BadRequestException;
-import br.marksouzza.expensetrackerapi.exception.BadRequestExceptionDetails;
+import br.marksouzza.expensetrackerapi.exception.ExceptionDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 public class BadRequestExceptionHandler {
 
         @ExceptionHandler(BadRequestException.class)
-        public ResponseEntity<BadRequestExceptionDetails> handlerBadRequestException(BadRequestException bre) {
+        public ResponseEntity<ExceptionDetails> handlerBadRequestException(BadRequestException bre) {
             return new ResponseEntity<>(
-                    BadRequestExceptionDetails.builder()
+                    ExceptionDetails.builder()
                             .timestamp(LocalDateTime.now())
                             .status(HttpStatus.BAD_REQUEST.value())
                             .title("Bad Request Exception, check the documentation")
