@@ -3,6 +3,7 @@ package br.marksouzza.expensetrackerapi.controller;
 import br.marksouzza.expensetrackerapi.domain.User;
 import br.marksouzza.expensetrackerapi.domain.UserModel;
 import br.marksouzza.expensetrackerapi.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> saveUser(@RequestBody UserModel user){
+    public ResponseEntity<User> saveUser(@Valid @RequestBody UserModel user){
         return new ResponseEntity<User>(userService.createUser(user), HttpStatus.CREATED);
     }
 }
