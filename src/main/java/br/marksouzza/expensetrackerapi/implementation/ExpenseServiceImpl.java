@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,19 +59,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<Expense> readByNameContaining(String name, Pageable page) {
-        return expenseRepo.findByNameContaining(name, page).toList();
-    }
-
-    @Override
-    public List<Expense> readByDateBetween(Date startDate, Date endDate, Pageable page) {
-        if (startDate == null) {
-            startDate = new Date(0);
-        }
-        if (endDate == null) {
-            endDate = new Date(System.currentTimeMillis());
-        }
-        Page<Expense> pages = expenseRepo.findByDateBetween(startDate, endDate, page);
-        return pages.toList();
+    public List<Expense> readByName(String name, Pageable page) {
+        return expenseRepo.findByName(name, page).toList();
     }
 }

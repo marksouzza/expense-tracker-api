@@ -5,10 +5,12 @@ import br.marksouzza.expensetrackerapi.service.ExpenseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -53,15 +55,6 @@ public class ExpenseController {
 
     @GetMapping("/name")
     public List<Expense>getAllExpensesByName(@RequestParam String keyword, Pageable page){
-        return expenseService.readByNameContaining(keyword, page);
+        return expenseService.readByName(keyword, page);
     }
-
-    @GetMapping("/date")
-    public List<Expense>getAllExpensesByDate(
-                        @RequestParam(required = false)Date startDate,
-                        @RequestParam(required = false)Date endDate, Pageable page){
-        return expenseService.readByDateBetween(startDate, endDate, page);
-
-    }
-
 }
