@@ -2,7 +2,6 @@ package br.marksouzza.expensetrackerapi.exception;
 
 import lombok.Builder;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @Data
