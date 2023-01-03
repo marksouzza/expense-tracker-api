@@ -2,6 +2,7 @@ package br.marksouzza.expensetrackerapi.controller;
 
 import br.marksouzza.expensetrackerapi.domain.User;
 import br.marksouzza.expensetrackerapi.domain.UserModel;
+import br.marksouzza.expensetrackerapi.exception.ResourceNotFoundException;
 import br.marksouzza.expensetrackerapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class UserController {
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUser(@RequestBody UserModel user, @PathVariable Long id){
         return new ResponseEntity<User>(userService.update(user, id), HttpStatus.OK);
+    }
 
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable Long id) throws ResourceNotFoundException{
+        userService.delete(id);
+        return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
     }
 }
