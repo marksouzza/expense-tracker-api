@@ -5,6 +5,8 @@ import br.marksouzza.expensetrackerapi.domain.User;
 import br.marksouzza.expensetrackerapi.domain.UserModel;
 
 public interface UserService {
-    User createUser (UserModel user);
+    User create (UserModel user);
     User read (Long id);
+
+    User update (UserModel user, Long id);
 }

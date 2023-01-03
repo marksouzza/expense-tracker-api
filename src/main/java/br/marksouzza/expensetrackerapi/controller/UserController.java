@@ -17,11 +17,17 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> saveUser(@Valid @RequestBody UserModel user){
-        return new ResponseEntity<User>(userService.createUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<User>(userService.create(user), HttpStatus.CREATED);
     }
 
     @GetMapping("/users/{id}")
     public ResponseEntity<User> readUser(@PathVariable Long id){
         return new ResponseEntity<User>(userService.read(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@RequestBody UserModel user, @PathVariable Long id){
+        return new ResponseEntity<User>(userService.update(user, id), HttpStatus.OK);
+
     }
 }

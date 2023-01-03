@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepo;
 
-    public User createUser(UserModel userModel) {
+    public User create(UserModel userModel) {
         if (userRepo.existsByEmail(userModel.getEmail())) {
             throw new ItemAlreadyExistsException("User is already registered with email: " + userModel.getEmail());
         }
@@ -28,5 +28,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User read(Long id) throws ResourceNotFoundException {
         return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found for the id: " + id));
+    }
+
+    @Override
+    public User update(UserModel user, Long id) throws ResourceNotFoundException {
+        User existingUser = read(id);
+        existingUser.setName(user.getName() != null ? user.getName() : existingUser.getName());
+        existingUser.setEmail(user.getEmail() != null ? user.getEmail() : existingUser.getEmail());
+        existingUser.setPassword(user.getPassword() != null ? user.getPassword() : existingUser.getPassword());
+        existingUser.setAge(user.getAge() != null ? user.getAge() : existingUser.getAge());
+        return userRepo.save(existingUser);
     }
 }
