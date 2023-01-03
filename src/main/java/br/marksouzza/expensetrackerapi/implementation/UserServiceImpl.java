@@ -3,6 +3,7 @@ package br.marksouzza.expensetrackerapi.implementation;
 import br.marksouzza.expensetrackerapi.domain.User;
 import br.marksouzza.expensetrackerapi.domain.UserModel;
 import br.marksouzza.expensetrackerapi.exception.ItemAlreadyExistsException;
+import br.marksouzza.expensetrackerapi.exception.ResourceNotFoundException;
 import br.marksouzza.expensetrackerapi.repository.UserRepository;
 import br.marksouzza.expensetrackerapi.service.UserService;
 import org.springframework.beans.BeanUtils;
@@ -22,5 +23,10 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         BeanUtils.copyProperties(userModel, user);
         return userRepo.save(user);
+    }
+
+    @Override
+    public User read(Long id) throws ResourceNotFoundException {
+        return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found for the id: " + id));
     }
 }
